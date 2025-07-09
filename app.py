@@ -1,46 +1,57 @@
 
 import streamlit as st
 
-st.set_page_config(page_title="EPS Calculator", layout="wide")
+st.set_page_config(page_title="EPS Calculator & Dilution Impact", layout="wide")
 st.sidebar.image("https://www.quantuniversity.com/assets/img/logo5.jpg")
 st.sidebar.divider()
-st.title("EPS Calculator")
+st.title("EPS Calculator & Dilution Impact")
 st.divider()
 st.markdown("""
-In this lab, we explore the intricacies of Earnings Per Share (EPS) calculations, focusing on the impact of potential dilution from convertible securities and stock options.
-This interactive tool allows you to dynamically adjust financial inputs and immediately visualize their effects on both Basic and Diluted EPS.
-We will cover the 'if-converted method' for convertible preferred stock and convertible debt, and the 'treasury stock method' for stock options and warrants.
+In this lab, we explore the impact of potential dilution on a company's Earnings Per Share (EPS).
+We will examine how different types of convertible securities, such as convertible preferred stock, convertible debt, and stock options,
+can affect the EPS calculation. The application provides an interactive platform to dynamically input financial data
+and visualize the immediate impact of these securities on both Basic and Diluted EPS.
 
 **Key Concepts:**
 
-*   **Basic EPS:** Earnings available to common shareholders divided by the weighted average number of common shares outstanding.
-*   **Diluted EPS:** A more conservative measure that considers the potential dilution from securities that could increase the number of common shares outstanding.
-*   **Antidilution:** Occurs when including a security in the diluted EPS calculation would *increase* EPS. In such cases, the security is excluded from the calculation.
+*   **Basic EPS:** Represents the earnings available to each share of common stock outstanding.
+    $$ \text{Basic EPS} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding}} $$
+*   **Diluted EPS:** Reflects the potential dilution of EPS that could occur if dilutive securities were converted into common stock.
 
-**Formulas:**
+**Dilutive Securities:**
 
-**Basic EPS Formula:**
-$$ \text{Basic EPS} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding}} $$
+*   **Convertible Preferred Stock:** Preferred stock that can be converted into common stock.
+    The **if-converted method** assumes that the preferred stock is converted at the beginning of the period.
+    $$ \text{Diluted EPS (Preferred)} = \frac{\text{Net Income} + \text{Preferred Dividends (re-added)}}{\text{Weighted Average Shares Outstanding} + \text{Shares from Conversion}} $$
+*   **Convertible Debt:** Debt that can be converted into common stock.
+    The **if-converted method** assumes that the debt is converted at the beginning of the period.
+    $$ \text{Diluted EPS (Debt)} = \frac{\text{Net Income} + \text{After-Tax Interest Savings} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding} + \text{Shares from Conversion}} $$
+*   **Stock Options:** Options that allow the holder to purchase common stock at a specified price.
+    The **treasury stock method** assumes that the option holders exercise their options and the company uses the proceeds
+    to repurchase shares of its own stock at the average market price.
+    $$ \text{Diluted EPS (Options)} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding} + \text{Incremental Shares}} $$
+    where:
+    $$ \text{Incremental Shares} = \text{Shares from Option Exercise} - \text{Shares Repurchased} $$
+    $$ \text{Shares Repurchased} = \frac{\text{Proceeds from Option Exercise}}{\text{Average Market Price}} $$
+    $$ \text{Proceeds from Option Exercise} = \text{Number of Options} \times \text{Exercise Price} $$
 
-**Diluted EPS with Convertible Preferred Stock (If-Converted Method):**
-$$ \text{Diluted EPS (Preferred)} = \frac{\text{Net Income} + \text{Preferred Dividends (re-added)}}{\text{Weighted Average Shares Outstanding} + \text{Shares from Conversion}} $$
+**How to Use This Application:**
 
-**Diluted EPS with Convertible Debt (If-Converted Method):**
-$$ \text{Diluted EPS (Debt)} = \frac{\text{Net Income} + \text{After-Tax Interest Savings} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding} + \text{Shares from Conversion}} $$
-
-**Diluted EPS with Stock Options (Treasury Stock Method):**
-$$ \text{Diluted EPS (Options)} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding} + \text{Incremental Shares}} $$
-where:
-$$ \text{Incremental Shares} = \text{Shares from Option Exercise} - \text{Shares Repurchased} $$
-$$ \text{Shares Repurchased} = \frac{\text{Proceeds from Option Exercise}}{\text{Average Market Price}} $$
-$$ \text{Proceeds from Option Exercise} = \text{Number of Options} \times \text{Exercise Price} $$
+1.  Enter the core financial data, including Net Income, Preferred Dividends, Weighted Average Shares Outstanding, and Tax Rate.
+2.  Select the types of dilutive securities to include in the calculation.
+3.  Enter the relevant data for each selected dilutive security, such as conversion ratios, coupon rates, and exercise prices.
+4.  Observe the calculated Basic EPS and Diluted EPS values.
+5.  Analyze the impact of each dilutive security on the Diluted EPS.
 """)
 
-page = st.sidebar.selectbox(label="Navigation", options=["EPS Calculator"])
+page = st.sidebar.selectbox(label="Navigation", options=["EPS Calculation", "Scenario Analysis"])
 
-if page == "EPS Calculator":
-    from application_pages.eps_calculator import run_eps_calculator
-    run_eps_calculator()
+if page == "EPS Calculation":
+    from application_pages.eps_calculation import run_eps_calculation
+    run_eps_calculation()
+elif page == "Scenario Analysis":
+    from application_pages.scenario_analysis import run_scenario_analysis
+    run_scenario_analysis()
 
 st.divider()
 st.write("© 2025 QuantUniversity. All Rights Reserved.")

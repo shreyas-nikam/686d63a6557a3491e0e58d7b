@@ -6,30 +6,33 @@ st.sidebar.divider()
 st.title("QuLab")
 st.divider()
 st.markdown("""
-In this lab, we will explore the concepts of **Basic Earnings Per Share (EPS)** and **Diluted Earnings Per Share (EPS)**.
-Understanding EPS is crucial for financial analysis as it indicates the portion of a company's profit allocated to each outstanding share of common stock. Diluted EPS, in particular, provides a more conservative view by considering the potential dilution from convertible securities, such as stock options, convertible preferred stock, and convertible debt.
+In this lab, we will explore the concept of Earnings Per Share (EPS) and how different financial instruments can dilute it. Understanding EPS is crucial for investors and analysts to assess a company's profitability on a per-share basis.
 
-This interactive application allows you to:
-- Input key financial metrics and parameters related to potentially dilutive securities.
-- See real-time calculations of Basic and Diluted EPS.
-- Visualize the impact of potential dilution on a company's earnings per share.
-- Understand the formulas and methodologies, including the anti-dilution test.
+We will cover:
+- **Basic EPS**: The earnings available to common shareholders divided by the weighted average shares outstanding.
+- **Diluted EPS**: The earnings available to common shareholders divided by the weighted average shares outstanding, assuming all dilutive securities (e.g., convertible preferred stock, convertible debt, stock options) are converted into common stock.
 
-**Basic EPS** represents the earnings available to common shareholders divided by the weighted average number of common shares outstanding.
+The application allows you to manipulate key financial inputs and observe the real-time impact on EPS and its components through dynamic visualizations.
 
-$$ \text{Basic EPS} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding}} $$
+**Formulae:**
 
-**Diluted EPS** adjusts Basic EPS for the impact of all dilutive potential common shares outstanding during the period. This includes shares that would be issued upon the conversion of convertible bonds, convertible preferred stock, and the exercise of stock options or warrants.
-
-The application uses the following methods for calculating the dilutive impact:
-- **If-Converted Method** for Convertible Preferred Stock and Convertible Debt: Assumes these securities are converted into common stock at the beginning of the period (or date of issuance, if later), and adjusts net income for any related interest or preferred dividend savings.
-- **Treasury Stock Method** for Stock Options: Assumes the exercise of options and the use of the proceeds to repurchase common stock at the average market price. Only the net increase in shares is considered dilutive.
-
-An important concept is **anti-dilution**: a security is anti-dilutive if its conversion or exercise would increase earnings per share or decrease loss per share. Anti-dilutive securities are excluded from the calculation of Diluted EPS. Diluted EPS should never be higher than Basic EPS.
+- **Basic EPS:**
+  $$\text{Basic EPS} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding}}$$
+- **Diluted EPS (Preferred):**
+  $$\text{Diluted EPS (Preferred)} = \frac{\text{Net Income} + \text{Preferred Dividends (re-added)}}{\text{Weighted Average Shares Outstanding} + \text{Shares from Conversion}}$$
+- **Diluted EPS (Debt):**
+  $$\text{Diluted EPS (Debt)} = \frac{\text{Net Income} + \text{After-Tax Interest Savings} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding} + \text{Shares from Conversion}}$$
+  where $\text{After-Tax Interest Savings} = \text{Interest Expense} \times (1 - \text{Tax Rate})$ and $\text{Interest Expense} = \text{Face Value} \times \text{Coupon Rate}$.
+- **Diluted EPS (Options):**
+  $$\text{Diluted EPS (Options)} = \frac{\text{Net Income} - \text{Preferred Dividends}}{\text{Weighted Average Shares Outstanding} + \text{Incremental Shares}}$$
+  where $\text{Incremental Shares} = \text{Shares from Option Exercise} - \text{Shares Repurchased}$.
+  $\text{Proceeds from Option Exercise} = \text{Number of Options} \times \text{Exercise Price}$.
+  $\text{Shares Repurchased} = \frac{\text{Proceeds from Option Exercise}}{\text{Average Market Price}}$.
 """)
 # Your code starts here
-from application_pages.eps_calculator import run_eps_calculator
-run_eps_calculator()
+# No pages for now, will add the entire code in the main file.
+from application import run_application
+run_application()
 # Your code ends
 st.divider()
 st.write("© 2025 QuantUniversity. All Rights Reserved.")
